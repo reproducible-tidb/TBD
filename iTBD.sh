@@ -24,5 +24,5 @@ tar \
     -cf $tarball *
 
 find $pkgdir -type f -exec sha256sum {} \;
-tarsha256=`sha256sum /publish/$tarball | cut -d ' ' -f1`
-echo "{\"version\":\"$pkgver\",\"sha256\":\"$tarsha256\",\"timestamp\":\""`date +%s`"\"}" > /publish/${tarball}.json
+tarsha256=`sha256sum $tarball | cut -d ' ' -f1`
+echo "{\"version\":\"$pkgver\",\"sha256\":\"$tarsha256\",\"timestamp\":\""`date +%s`"\"}" > ${tarball}.json
