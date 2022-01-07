@@ -16,8 +16,12 @@ else
 fi
 
 CRI="${TBD_CRI:-docker}"
+withTTY=""
+if [ "$(tty)" != "not a tty" ]; then
+  withTTY="-it"
+fi
 
-$CRI run -it \
+$CRI run $withTTY \
     -v $(realpath $1):/src/pkgmeta \
     -v $cachedir:/src/$pkgname \
     -v $(dirname "$(realpath "${BASH_SOURCE[0]}")")/iTBD.sh:/usr/bin/iTBD.sh \
