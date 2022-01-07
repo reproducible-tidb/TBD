@@ -1,9 +1,14 @@
+# util funcs
+## check if a function exists
+fn_exists() { declare -F "$1" > /dev/null; }
+
 # checkout code
 cd /src/$pkgname/git
 git checkout $pkgref
 
 # build and package
 export SOURCE_DATE_EPOCH=$(git log -1 --format=%ct)
+fn_exists prepare && prepare
 build
 
 export pkgdir=`mktemp -d`
