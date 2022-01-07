@@ -1,6 +1,6 @@
 # checkout code
 cd /src/$pkgname/git
-git checkout $pkgcommit
+git checkout $pkgref
 
 # build and package
 export SOURCE_DATE_EPOCH=$(git log -1 --format=%ct)
