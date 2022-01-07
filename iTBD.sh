@@ -1,6 +1,6 @@
 # checkout code
 cd /src/$pkgname/git
-git checkout $pkgcommit
+git checkout $pkgref
 
 # build and package
 export SOURCE_DATE_EPOCH=$(git log -1 --format=%ct)
@@ -17,5 +17,7 @@ tar \
     --owner=0 --group=0 --numeric-owner \
     --pax-option=exthdr.name=%d/PaxHeaders/%f,delete=atime,delete=ctime \
     -cf $tarball *
+
+find $pkgdir -type f -exec sha256sum {} \;
 sha256sum $tarball
 

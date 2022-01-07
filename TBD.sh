@@ -9,6 +9,7 @@ if [ -d $cachedir/git ]; then
   opwd=$PWD
   cd $cachedir/git
   git fetch --all
+  git pull
   cd $opwd
 else
   git clone $pkggit $cachedir/git
