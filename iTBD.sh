@@ -10,10 +10,12 @@ export pkgdir=`mktemp -d`
 package
 
 cd $pkgdir
+tarball=/publish/$pkgname-$pkgver-$pkgrel.tar
 tar \
     --sort=name \
     --mtime="@${SOURCE_DATE_EPOCH}" \
     --owner=0 --group=0 --numeric-owner \
     --pax-option=exthdr.name=%d/PaxHeaders/%f,delete=atime,delete=ctime \
-    -cf /publish/$pkgname-$pkgver-$pkgrel.tar *
+    -cf $tarball *
+sha256sum $tarball
 
