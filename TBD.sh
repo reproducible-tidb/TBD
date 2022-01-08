@@ -3,16 +3,16 @@ set -e
 source $1
 
 # update git cache
-cachedir=$(realpath $(dirname $1))/.cache/$pkgname
+cachedir=$(realpath $(dirname $1))/.cache
 mkdir -p $cachedir
-if [ -d $cachedir/git ]; then
+if [ -d $cachedir/$pkgname ]; then
   opwd=$PWD
-  cd $cachedir/git
+  cd $cachedir/$pkgname
   git fetch --all
   git pull
   cd $opwd
 else
-  git clone $pkggit $cachedir/git
+  git clone $pkggit $cachedir/$pkgname
 fi
 
 CRI="${TBD_CRI:-docker}"
@@ -23,7 +23,7 @@ fi
 
 $CRI run $withTTY \
     -v $(realpath $1):/src/pkgmeta \
-    -v $cachedir:/src/$pkgname \
+    -v $cachedir:/src/tbdcache \
     -v $(dirname "$(realpath "${BASH_SOURCE[0]}")")/iTBD.sh:/usr/bin/iTBD.sh \
     -v $PWD:/publish \
     $image \

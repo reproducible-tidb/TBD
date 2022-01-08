@@ -3,7 +3,7 @@
 fn_exists() { declare -F "$1" > /dev/null; }
 
 # checkout code
-cd /src/$pkgname/git
+cd /src/tbdcache/$pkgname
 git checkout $pkgref
 
 # build and package
