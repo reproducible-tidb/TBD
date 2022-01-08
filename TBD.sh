@@ -3,7 +3,7 @@ set -e
 source $1
 
 # update git cache
-cachedir=$(realpath $(dirname $1))/.cache
+cachedir=${TBD_CACHE:-$(realpath $(dirname $1))/.cache}
 mkdir -p $cachedir
 if [ -d $cachedir/$pkgname ]; then
   opwd=$PWD
