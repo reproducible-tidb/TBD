@@ -8,8 +8,8 @@ mkdir -p $cachedir
 if [ -d $cachedir/$pkgname ]; then
   opwd=$PWD
   cd $cachedir/$pkgname
+  git reset --hard HEAD
   git fetch --all
-  git pull
   cd $opwd
 else
   git clone $pkggit $cachedir/$pkgname
