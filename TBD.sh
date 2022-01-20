@@ -27,5 +27,5 @@ $CRI run $withTTY \
     -v $(dirname "$(realpath "${BASH_SOURCE[0]}")")/iTBD.sh:/usr/bin/iTBD.sh \
     -v $PWD:/publish \
     $image \
-    "bash" "-c" "source /src/pkgmeta && source /usr/bin/iTBD.sh"
+    "sh" "-c" "source /src/pkgmeta && source /usr/bin/iTBD.sh"
 
