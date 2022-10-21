@@ -31,7 +31,14 @@ else
 fi
 
 tarball=$outputdir/$pkgname-$pkgver-$pkgrel.tar.gz
-tar \
+
+TAR="tar"
+
+if [[ `uname` == 'Darwin' ]]; then
+    TAR="gtar"
+fi
+
+${TAR} \
     --sort=name \
     --mtime="@${SOURCE_DATE_EPOCH}" \
     --owner=0 --group=0 --numeric-owner \
