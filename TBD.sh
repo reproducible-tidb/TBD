@@ -2,6 +2,19 @@
 set -e
 source $1
 
+realpath() (
+  OURPWD=$PWD
+  cd "$(dirname "$1")"
+  LINK=$(readlink "$(basename "$1")")
+  while [ "$LINK" ]; do
+    cd "$(dirname "$LINK")"
+    LINK=$(readlink "$(basename "$1")")
+  done
+  REALPATH="$PWD/$(basename "$1")"
+  cd "$OURPWD"
+  echo "$REALPATH"
+)
+
 # update git cache
 cachedir=${TBD_CACHE:-$(realpath $(dirname $1))/.cache}
 mkdir -p $cachedir
