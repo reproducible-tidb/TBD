@@ -9,10 +9,14 @@ if [ -z "$BUILD_DIR" ]; then
 else
   cd $BUILD_DIR
 fi
-git checkout $pkgref
 
 # build and package
-export SOURCE_DATE_EPOCH=$(git log -1 --format=%ct)
+if [ -d .git ]; then
+  git checkout $pkgref
+  export SOURCE_DATE_EPOCH=$(git log -1 --format=%ct)
+else
+  export SOURCE_DATE_EPOCH=$(date "+%s")
+fi
 build
 
 export pkgdir=`mktemp -d`
