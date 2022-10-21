@@ -4,7 +4,11 @@ fn_exists() { declare -F "$1" > /dev/null; }
 prepare || true
 
 # checkout code
-cd /src/tbdcache/$pkgname
+if [ -z "$BUILD_DIR" ]; then
+  cd /src/tbdcache/$pkgname
+else
+  cd $BUILD_DIR
+fi
 git checkout $pkgref
 
 # build and package
@@ -15,13 +19,13 @@ export pkgdir=`mktemp -d`
 package
 
 cd $pkgdir
-tarball=/publish/$pkgname-$pkgver-$pkgrel.tar
+tarball=/publish/$pkgname-$pkgver-$pkgrel.tar.gz
 tar \
     --sort=name \
     --mtime="@${SOURCE_DATE_EPOCH}" \
     --owner=0 --group=0 --numeric-owner \
     --pax-option=exthdr.name=%d/PaxHeaders/%f,delete=atime,delete=ctime \
-    -cf $tarball *
+    -zcf $tarball *
 
 find $pkgdir -type f -exec sha256sum {} \;
 tarsha256=`sha256sum $tarball | cut -d ' ' -f1`

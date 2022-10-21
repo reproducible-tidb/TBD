@@ -21,11 +21,17 @@ if [ "$(tty)" != "not a tty" ]; then
   withTTY="-it"
 fi
 
-$CRI run $withTTY \
-    -v $(realpath $1):/src/pkgmeta \
-    -v $cachedir:/src/tbdcache \
-    -v $(dirname "$(realpath "${BASH_SOURCE[0]}")")/iTBD.sh:/usr/bin/iTBD.sh \
-    -v $PWD:/publish \
-    $image \
-    "sh" "-c" "source /src/pkgmeta && source /usr/bin/iTBD.sh"
-
+if [ $CRI == "none" ]; then
+  local pwd=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
+  export BUILD_DIR=$pwd/$cachedir/$pkgname
+  source $1
+  source $pwd/iTBD.sh
+else
+  $CRI run $withTTY \
+      -v $(realpath $1):/src/pkgmeta \
+      -v $cachedir:/src/tbdcache \
+      -v $(dirname "$(realpath "${BASH_SOURCE[0]}")")/iTBD.sh:/usr/bin/iTBD.sh \
+      -v $PWD:/publish \
+      $image \
+      "sh" "-c" "source /src/pkgmeta && source /usr/bin/iTBD.sh"
+fi
