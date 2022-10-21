@@ -31,7 +31,7 @@ else
 fi
 
 tarball=$outputdir/$pkgname-$pkgver-$pkgrel.tar.gz
-tar \
+gtar \
     --sort=name \
     --mtime="@${SOURCE_DATE_EPOCH}" \
     --owner=0 --group=0 --numeric-owner \
