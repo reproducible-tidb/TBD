@@ -19,7 +19,14 @@ export pkgdir=`mktemp -d`
 package
 
 cd $pkgdir
-tarball=/publish/$pkgname-$pkgver-$pkgrel.tar.gz
+
+if [ -z "$PKG_DIR" ]; then
+  export outputdir=$PKG_DIR
+else
+  export outputdir=/publish
+fi
+
+tarball=$outputdir/$pkgname-$pkgver-$pkgrel.tar.gz
 tar \
     --sort=name \
     --mtime="@${SOURCE_DATE_EPOCH}" \

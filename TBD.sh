@@ -36,6 +36,8 @@ fi
 if [ $CRI == "none" ]; then
   pwd=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
   export BUILD_DIR=$cachedir/$pkgname
+  export PKG_DIR=$cachedir/.pkg
+  mkdir -p $PKG_DIR
   source $1
   source $pwd/iTBD.sh
 else
