@@ -4,10 +4,10 @@ fn_exists() { declare -F "$1" > /dev/null; }
 prepare || true
 
 # checkout code
-if [ -z "$BUILD_DIR" ]; then
-  cd /src/tbdcache/$pkgname
-else
+if [ ! -z "$BUILD_DIR" ]; then
   cd $BUILD_DIR
+else
+  cd /src/tbdcache/$pkgname
 fi
 
 # build and package
@@ -24,7 +24,7 @@ package
 
 cd $pkgdir
 
-if [ -z "$PKG_DIR" ]; then
+if [ ! -z "$PKG_DIR" ]; then
   export outputdir=$PKG_DIR
 else
   export outputdir=/publish
