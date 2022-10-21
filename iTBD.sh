@@ -41,3 +41,10 @@ tar \
 find $pkgdir -type f -exec sha256sum {} \;
 tarsha256=`sha256sum $tarball | cut -d ' ' -f1`
 echo "{\"version\":\"$pkgver\",\"sha256\":\"$tarsha256\",\"timestamp\":\""`date +%s`"\"}" > ${tarball}.json
+echo "{
+  \"package\":\"$pkgname\",
+  \"version\":\"$pkgver\",
+  \"entrypoint\":\"$entrypoint\",
+  \"description\":\"$pkgdesc\",
+  \"file\":\"$tarball\"
+}"
