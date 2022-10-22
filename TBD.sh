@@ -33,8 +33,8 @@ elif [ "${#pkgurl[@]}" -gt 1 ]; then
   files=()
   for fileaddr in ${pkgurl[@]}; do
     if [[ "$fileaddr" =~ (.*)::(.*) ]]; then
-      fname=${BASH_REMATCH[0]}
-      url=${BASH_REMATCH[1]}
+      fname=${BASH_REMATCH[1]}
+      url=${BASH_REMATCH[2]}
       wget "$url" -O $cachedir/downloads/$fname
       files+=("$cachedir/downloads/$fname")
     else
