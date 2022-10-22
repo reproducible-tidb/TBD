@@ -39,8 +39,9 @@ elif [ "${#pkgurl[@]}" -gt 1 ]; then
       wget "$url" -O $cachedir/downloads/$fname
       files+=("$cachedir/downloads/$fname")
     else
-      wget $fileaddr -O $cachedir/downloads/$pkgname.tbd-downloaded
-      files+=("$cachedir/downloads/$pkgname.tbd-downloaded")
+      _filename=${fileaddr##*/}
+      wget $fileaddr -O $cachedir/downloads/$_filename
+      files+=("$cachedir/downloads/$_filename")
     fi
   done
 
