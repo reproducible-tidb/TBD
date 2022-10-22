@@ -29,16 +29,17 @@ if [ ! -z "$pkggit" ]; then
     git clone $pkggit $cachedir/$pkgname
   fi
 elif [ "${#pkgurl[@]}" -gt 1 ]; then
+  mkdir -p $cachedir/downloads/
   files=()
   for fileaddr in ${pkgurl[@]}; do
     if [[ "$fileaddr" =~ (.*)::(.*) ]]; then
       fname=${BASH_REMATCH[0]}
       url=${BASH_REMATCH[1]}
-      wget $url -O /tmp/$fname
-      files+=("/tmp/$fname")
+      wget "$url" -O $cachedir/downloads/$fname
+      files+=("$cachedir/downloads/$fname")
     else
-      wget $fileaddr -O /tmp/$pkgname.tbd-downloaded
-      files+=("/tmp/$pkgname.tbd-downloaded")
+      wget $fileaddr -O $cachedir/downloads/$pkgname.tbd-downloaded
+      files+=("$cachedir/downloads/$pkgname.tbd-downloaded")
     fi
   done
 
