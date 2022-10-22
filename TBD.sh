@@ -28,12 +28,25 @@ if [ ! -z "$pkggit" ]; then
   else
     git clone $pkggit $cachedir/$pkgname
   fi
-elif [ ! -z "$pkgurl" ]; then
-  wget $pkgurl -O /tmp/$pkgname.tbd-downloaded
-  
+elif [ "${#pkgurl[@]}" -gt 1 ]; then
+  files=()
+  for fileaddr in ${pkgurl[@]}; do
+    if [[ "$fileaddr" =~ (.*)::(.*) ]]; then
+      fname=${BASH_REMATCH[0]}
+      url=${BASH_REMATCH[1]}
+      wget $url -O /tmp/$fname
+      files+=("/tmp/$fname")
+    else
+      wget $fileaddr -O /tmp/$pkgname.tbd-downloaded
+      files+=("/tmp/$pkgname.tbd-downloaded")
+    fi
+  done
+
   mkdir -p $cachedir/$pkgname
   cd $cachedir/$pkgname
-  tar xvf /tmp/$pkgname.tbd-downloaded
+  for f in ${files[@]}; do
+    tar xvf $f || cp $f .
+  done
   cd $opwd
 else
   echo "Either pkggit or pkgurl must be set in the .TBD file."
