@@ -48,7 +48,14 @@ elif [ "${#pkgurl[@]}" -gt 1 ]; then
   mkdir -p $cachedir/$pkgname
   cd $cachedir/$pkgname
   for f in ${files[@]}; do
-    tar xvf $f || cp $f .
+    if [[ "$f" == *.tar ]] ||\
+      [[ "$f" == *.tar.gz ]] ||\
+      [[ "$f" == *.tar.xz ]] ||\
+      [[ "$f" == *.tar.zst ]]; then
+      tar xvf $f || cp $f .
+    else
+      cp $f .
+    fi
   done
   cd $opwd
 else
