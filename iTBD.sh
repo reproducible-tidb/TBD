@@ -5,10 +5,11 @@ prepare || true
 
 # checkout code
 if [ ! -z "$BUILD_DIR" ]; then
-  cd $BUILD_DIR
+  export builddir=$BUILD_DIR
 else
-  cd /src/tbdcache/$pkgname
+  export builddir=/src/tbdcache/$pkgname
 fi
+cd $builddir
 
 # build and package
 if [ -d .git ]; then

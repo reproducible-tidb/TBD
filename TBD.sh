@@ -16,7 +16,8 @@ realpath() (
 )
 
 # update git cache
-cachedir=${TBD_CACHE:-$(realpath $(dirname $1))/.cache}
+export srcdir=$(realpath $(dirname $1))
+cachedir=${TBD_CACHE:-$srcdir/.cache}
 mkdir -p $cachedir
 opwd=$PWD
 if [ ! -z "$pkggit" ]; then
